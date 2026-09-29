@@ -1,20 +1,66 @@
-// Seed do componente raiz do Document Management System.
-//
-// Este é apenas um ponto de partida mínimo. Durante o Passo 3 você vai usar o
-// Agent Mode do GitHub Copilot para construir os componentes:
-//   - components/UploadComponent
-//   - components/DocumentList
-//   - components/DownloadButton
-// e o serviço services/ que consome a API do backend via fetch.
+import { useEffect, useState } from 'react';
+import DocumentList from './components/DocumentList.jsx';
+import UploadComponent from './components/UploadComponent.jsx';
+import { listDocuments } from './services/api.js';
+import './App.css';
 
 export default function App() {
+  const [documents, setDocuments] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [notice, setNotice] = useState('');
+
+  async function loadDocuments() {
+    setIsLoading(true);
+
+    try {
+      setDocuments(await listDocuments());
+      setError('');
+    } catch (loadError) {
+      setError(loadError.message);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    loadDocuments();
+  }, []);
+
+  async function handleUploaded(document) {
+    setDocuments((currentDocuments) => [document, ...currentDocuments]);
+    setNotice(`${document.originalName} foi enviado com sucesso.`);
+    setError('');
+  }
+
   return (
-    <main style={{ fontFamily: 'system-ui, sans-serif', padding: '2rem' }}>
-      <h1>Document Management System</h1>
-      <p>
-        Seed do frontend. Construa a interface durante o Passo 3 usando o Agent
-        Mode do GitHub Copilot.
-      </p>
+    <main className="app-shell">
+      <header className="app-header">
+        <div className="brand-mark">DMS</div>
+        <div>
+          <p className="eyebrow">Document Management System</p>
+          <h1>Seu acervo, em ordem.</h1>
+        </div>
+      </header>
+
+      <div className="content-grid">
+        <UploadComponent onUploaded={handleUploaded} />
+        <section className="status-panel" aria-live="polite">
+          <span className="status-dot" />
+          <div>
+            <strong>Armazenamento local</strong>
+            <p>Seus documentos ficam disponíveis nesta aplicação.</p>
+          </div>
+        </section>
+      </div>
+
+      {notice && <p className="notice" role="status">{notice}</p>}
+      {error && <p className="form-error page-error" role="alert">{error}</p>}
+      <DocumentList
+        documents={documents}
+        isLoading={isLoading}
+        onDownloadError={setError}
+      />
     </main>
   );
 }

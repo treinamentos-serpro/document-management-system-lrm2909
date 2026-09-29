@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+
+:root {
+  color: #1c2725;
+  background: #edf2ef;
+  font-family: 'DM Sans', sans-serif;
+  font-synthesis: none;
+  line-height: 1.5;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 320px; }
+button, input { font: inherit; }
+
+.app-shell {
+  min-height: 100vh;
+  padding: 56px clamp(20px, 7vw, 112px) 72px;
+  background: radial-gradient(circle at 100% 0%, #d0e6da 0, transparent 35%), #edf2ef;
+}
+
+.app-header, .content-grid, .documents-section { max-width: 1120px; margin: 0 auto; }
+.app-header { display: flex; align-items: center; gap: 18px; margin-bottom: 44px; }
+.brand-mark { background: #d65a36; color: #fffaf4; font: 700 16px 'Space Grotesk', sans-serif; letter-spacing: .08em; padding: 12px 10px; }
+.eyebrow { color: #bd4d2f; font-size: 11px; font-weight: 700; letter-spacing: .12em; margin: 0 0 7px; text-transform: uppercase; }
+h1, h2 { font-family: 'Space Grotesk', sans-serif; margin: 0; }
+h1 { font-size: clamp(30px, 5vw, 58px); letter-spacing: -.04em; line-height: 1.02; }
+h2 { font-size: 24px; letter-spacing: -.025em; }
+.content-grid { display: grid; gap: 18px; grid-template-columns: minmax(0, 1.7fr) minmax(220px, .8fr); }
+.upload-panel, .status-panel { border: 1px solid rgba(28, 39, 37, .12); border-radius: 6px; padding: 28px; }
+.upload-panel { background: #1c2725; color: #f9f5ed; }
+.upload-panel .eyebrow { color: #e88767; }
+.upload-panel h2 { margin-bottom: 8px; }
+.muted, .status-panel p { color: #9eaca6; margin: 0; }
+.upload-controls { align-items: center; display: flex; gap: 12px; margin-top: 28px; }
+.file-picker { background: #f9f5ed; border-radius: 4px; color: #40504a; cursor: pointer; flex: 1; min-width: 0; overflow: hidden; padding: 11px 14px; text-overflow: ellipsis; white-space: nowrap; }
+.file-picker input { display: none; }
+.primary-button, .download-button { border: 0; border-radius: 4px; cursor: pointer; font-weight: 700; transition: transform .2s, opacity .2s; }
+.primary-button { background: #e87852; color: #fff; padding: 12px 17px; }
+.download-button { background: #e4eee8; color: #2d6653; padding: 8px 12px; }
+button:hover:not(:disabled) { transform: translateY(-1px); }
+button:disabled { cursor: wait; opacity: .6; }
+.status-panel { align-items: flex-start; background: #fffaf4; display: flex; gap: 13px; }
+.status-panel strong { font-family: 'Space Grotesk', sans-serif; }
+.status-panel p { color: #60716a; font-size: 14px; margin-top: 4px; }
+.status-dot { background: #4d9b72; border-radius: 50%; box-shadow: 0 0 0 5px #dceee2; height: 10px; margin: 6px 0 0 2px; width: 10px; }
+.documents-section { margin-top: 64px; }
+.section-heading { align-items: end; display: flex; justify-content: space-between; margin-bottom: 18px; }
+.document-count { color: #60716a; font-size: 14px; }
+.document-table { background: #fffaf4; border: 1px solid rgba(28, 39, 37, .12); border-radius: 6px; overflow: hidden; }
+.table-header, .document-row { align-items: center; display: grid; gap: 18px; grid-template-columns: minmax(180px, 1.5fr) .7fr 1.2fr auto; padding: 15px 20px; }
+.table-header { background: #e4eee8; color: #60716a; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.document-row { border-top: 1px solid rgba(28, 39, 37, .1); color: #60716a; font-size: 14px; }
+.document-row strong { color: #1c2725; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.empty-state { background: #fffaf4; border: 1px dashed #9eaca6; color: #60716a; padding: 30px; text-align: center; }
+.notice { color: #2d6653; font-size: 14px; margin: 18px auto 0; max-width: 1120px; }
+.form-error { color: #f49a7b; font-size: 13px; margin: 12px 0 0; }
+.page-error { color: #a33d2d; max-width: 1120px; }
+
+@media (max-width: 720px) {
+  .app-shell { padding: 32px 16px 48px; }
+  .app-header { align-items: flex-start; margin-bottom: 32px; }
+  .content-grid { grid-template-columns: 1fr; }
+  .upload-controls { align-items: stretch; flex-direction: column; }
+  .documents-section { margin-top: 44px; }
+  .table-header { display: none; }
+  .document-row { align-items: start; grid-template-columns: 1fr auto; padding: 16px; }
+  .document-row span { font-size: 13px; }
+  .document-row span:nth-child(3) { grid-column: 1; }
+  .document-row .download-button { grid-column: 2; grid-row: 1 / span 2; }
+}
